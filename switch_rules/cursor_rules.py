@@ -1,5 +1,6 @@
 import os
 import json
+import argparse
 
 __version__ = '1.0'
 
@@ -43,11 +44,15 @@ def find_rule_by_tags(tags):
 
     return matching_rules
 
-# 示例用法
-if __name__ == "__main__":
-    # 这里可以替换为用户输入的规则文件名
-    switch_rule('example_rule.json')
-    
-    # 查找标签为 'tag1' 或 'tag2' 的规则文件
-    rules = find_rule_by_tags(['tag1', 'tag2'])
+def main_switch_rule():
+    parser = argparse.ArgumentParser(description='切换Cursor规则文件')
+    parser.add_argument('rule_name', type=str, help='要切换的规则文件名')
+    args = parser.parse_args()
+    switch_rule(args.rule_name)
+
+def main_find_rules():
+    parser = argparse.ArgumentParser(description='查找规则文件')
+    parser.add_argument('tags', type=str, nargs='+', help='要查找的标签')
+    args = parser.parse_args()
+    rules = find_rule_by_tags(args.tags)
     print(f"找到的规则文件: {rules}")
